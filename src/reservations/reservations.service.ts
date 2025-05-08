@@ -17,6 +17,14 @@ export class ReservationsService {
     });
   }
 
+  async getUsers() {
+    return await this.prisma.user.findMany();
+  }
+
+  async getSpaces() {
+    return await this.prisma.space.findMany();
+  }
+
   async cancelReservation(id: number) {
     return await this.prisma.reservation.update({
       where: { id },
@@ -30,16 +38,14 @@ export class ReservationsService {
     startDate?: Date;
     endDate?: Date;
   }) {
-    const where: Prisma.ReservationWhereInput = {
-      status: true,
-      ...(filters.userId && { userId: filters.userId }),
-      ...(filters.spaceId && { spaceId: filters.spaceId }),
-      ...(filters.startDate && { startDate: { gte: filters.startDate } }),
-      ...(filters.endDate && { endDate: { lte: filters.endDate } }),
-    };
-
     return await this.prisma.reservation.findMany({
-      where: where,
+      where: {
+        status: true,
+        ...(filters.userId && { userId: filters.userId }),
+        ...(filters.spaceId && { spaceId: filters.spaceId }),
+        ...(filters.startDate && { startDate: { gte: filters.startDate } }),
+        ...(filters.endDate && { endDate: { lte: filters.endDate } }),
+      },
       include: {
         user: true,
         space: true,

@@ -5,41 +5,40 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "node_modules/@prisma/client"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 // Modelo de Usuario
 model User {
-  id        Int          @id @default(autoincrement())
-  correo    String?      @unique
-  nombre    String       
-  reservations Reservation[] // Relación uno a muchos
+    id           Int           @id @default(autoincrement())
+    correo       String?       @unique
+    nombre       String
+    reservations Reservation[] // Relación uno a muchos
 }
 
 // Modelo de Espacio
 model Space {
-  id        Int          @id @default(autoincrement())
-  status    Boolean      @default(true)
-  nombre    String       @db.VarChar(255)
-    imageUrl      String?        @db.VarChar(1024)
-  reservations Reservation[] // Relación uno a muchos
+    id           Int           @id @default(autoincrement())
+    status       Boolean       @default(true)
+    nombre       String        @db.VarChar(255)
+    imageUrl     String?       @db.VarChar(1024)
+    reservations Reservation[] // Relación uno a muchos
 }
 
 // Modelo de Reserva
 model Reservation {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  spaceId   Int
-  startDate DateTime
-  endDate   DateTime
-  status    Boolean  @default(true) // Campo status para saber si la reserva está activa
+    id        Int      @id @default(autoincrement())
+    userId    Int
+    spaceId   Int
+    startDate DateTime
+    endDate   DateTime
+    status    Boolean  @default(true) // Campo status para saber si la reserva está activa
 
-  user      User     @relation(fields: [userId], references: [id])
-  space     Space    @relation(fields: [spaceId], references: [id])
+    user  User  @relation(fields: [userId], references: [id])
+    space Space @relation(fields: [spaceId], references: [id])
 }

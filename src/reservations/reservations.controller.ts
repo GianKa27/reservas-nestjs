@@ -25,6 +25,20 @@ export class ReservationsController {
     return this.reservationsService.cancelReservation(+id);
   }
 
+  @Get('users')
+  async getUsers() {
+    const users = await this.reservationsService.getUsers();
+
+    return { data: users };
+  }
+
+  @Get('spaces')
+  async getSpaces() {
+    const spaces = await this.reservationsService.getSpaces();
+
+    return { data: spaces };
+  }
+
   @Get()
   async findAll(@Query() filters: FilterReservationsDto) {
     const reservations =
