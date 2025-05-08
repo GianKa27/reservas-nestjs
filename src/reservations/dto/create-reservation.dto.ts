@@ -1,5 +1,5 @@
-import { IsInt, IsDateString, Min, IsISO8601 } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { IsInt, Min, IsISO8601 } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class CreateReservationDto {
   @IsInt({ message: 'El ID de usuario debe ser un número entero' })

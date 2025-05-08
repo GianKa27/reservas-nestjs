@@ -38,13 +38,38 @@ export class ReservationsService {
     startDate?: Date;
     endDate?: Date;
   }) {
+    // const where: Prisma.ReservationWhereInput = {
+    //   status: true,
+    // };
+
+    // if (filters.userId !== null && filters.userId !== undefined) {
+    //   where.userId = filters.userId;
+    // }
+
+    // if (filters.spaceId !== null && filters.spaceId !== undefined) {
+    //   where.spaceId = filters.spaceId;
+    // }
+
+    // // Ajustar startDate y endDate si se proporcionan
+    // if (
+    //   filters.startDate instanceof Date &&
+    //   !isNaN(filters.startDate.getTime())
+    // ) {
+    //   // Normalizamos la startDate para que sea a las 00:00:00 del día
+    //   const startDateNormalized = new Date(filters.startDate);
+    //   startDateNormalized.setHours(0, 0, 0, 0); // Establece a las 00:00:00
+    //   where.startDate = { gte: startDateNormalized };
+    // }
+
+    // if (filters.endDate instanceof Date && !isNaN(filters.endDate.getTime())) {
+    //   // Normalizamos la endDate para que sea a las 23:59:59 del día
+    //   const endDateNormalized = new Date(filters.endDate);
+    //   endDateNormalized.setHours(23, 59, 59, 999); // Establece a las 23:59:59
+    //   where.endDate = { lte: endDateNormalized };
+    // }
     return await this.prisma.reservation.findMany({
       where: {
         status: true,
-        ...(filters.userId && { userId: filters.userId }),
-        ...(filters.spaceId && { spaceId: filters.spaceId }),
-        ...(filters.startDate && { startDate: { gte: filters.startDate } }),
-        ...(filters.endDate && { endDate: { lte: filters.endDate } }),
       },
       include: {
         user: true,

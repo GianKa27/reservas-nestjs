@@ -1,5 +1,5 @@
-import { IsInt, IsOptional, IsDateString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsInt, IsOptional, IsISO8601 } from 'class-validator';
+import { Type, Transform } from 'class-transformer';
 
 export class FilterReservationsDto {
   @IsInt()
@@ -12,11 +12,13 @@ export class FilterReservationsDto {
   @Type(() => Number)
   spaceId?: number;
 
-  @IsDateString()
+  //   @Transform(({ value }) => value.replace(' ', 'T') + 'Z')
   @IsOptional()
+  @Type(() => Date)
   startDate?: Date;
 
-  @IsDateString()
+  //   @Transform(({ value }) => value.replace(' ', 'T') + 'Z')
   @IsOptional()
+  @Type(() => Date)
   endDate?: Date;
 }
